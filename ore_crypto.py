@@ -10,7 +10,7 @@ import random
 import pickle
 
 db = []
-BLOCK_SIZE = 1
+BLOCK_SIZE = 16
 random.seed(1)
 with open('keys.txt', 'rb') as file:
     sk, aes_iv = pickle.load(file)
