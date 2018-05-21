@@ -208,45 +208,48 @@ def main():
         query = input('> ')
         tokens = query.split()
         #print(tokens)
-        if 'insert' in query:
-            start = time.time()
-            insert(db, int(tokens[1]))
-            print('Successfully insered', int(tokens[1]))
-            print(time.time()-start, 'sec.')
-            continue
-        if 'remove' in query:
-            start = time.time()
-            remove(db, int(tokens[1]))
-            print('Successfully removed', int(tokens[1]))
-            print(time.time()-start, 'sec.')
-            continue
-        if 'drop' in query:
-            start = time.time()
-            drop(db)
-            print(time.time()-start, 'sec.')
-            continue
-        if 'select *' in query:
-            start = time.time()
-            print(get_range(db))
-            print(time.time()-start, 'sec.')
-            continue
-        if 'select' in query and 'from' in query and 'to' in query:
-            start = time.time()
-            print(get_range(db, int(tokens[2]), int(tokens[4])))
-            print(time.time()-start, 'sec.')
-            continue
-        if 'select' in query and 'from' in query:
-            start = time.time()
-            print(get_range(db, lower=int(tokens[2])))
-            print(time.time()-start, 'sec.')
-            continue
-        if 'select' in query and 'to' in query:
-            start = time.time()
-            print(get_range(db, upper=int(tokens[2])))
-            print(time.time()-start, 'sec.')
-            continue
-        if query != 'exit':
-            print('Command not found')
+        try:
+            if 'insert' in query:
+                start = time.time()
+                insert(db, int(tokens[1]))
+                print('Successfully insered', int(tokens[1]))
+                print(time.time()-start, 'sec.')
+                continue
+            if 'remove' in query:
+                start = time.time()
+                remove(db, int(tokens[1]))
+                print('Successfully removed', int(tokens[1]))
+                print(time.time()-start, 'sec.')
+                continue
+            if 'drop' in query:
+                start = time.time()
+                drop(db)
+                print(time.time()-start, 'sec.')
+                continue
+            if 'select *' in query:
+                start = time.time()
+                print(get_range(db))
+                print(time.time()-start, 'sec.')
+                continue
+            if 'select' in query and 'from' in query and 'to' in query:
+                start = time.time()
+                print(get_range(db, int(tokens[2]), int(tokens[4])))
+                print(time.time()-start, 'sec.')
+                continue
+            if 'select' in query and 'from' in query:
+                start = time.time()
+                print(get_range(db, lower=int(tokens[2])))
+                print(time.time()-start, 'sec.')
+                continue
+            if 'select' in query and 'to' in query:
+                start = time.time()
+                print(get_range(db, upper=int(tokens[2])))
+                print(time.time()-start, 'sec.')
+                continue
+            if query != 'exit':
+                print('Command not found')
+        except ValueError:
+            print('Error in parsing the query. Try again.')
 
 if __name__ == "__main__":
     main()
