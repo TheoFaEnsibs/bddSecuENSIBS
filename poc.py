@@ -2,8 +2,6 @@ import mysql.connector
 from pyope.ope import OPE
 ##Implémentation ORE
 
-
-
 ##Coté client
 ## Insérer un nouveau salaire coté client
 def client_put(id,val,connec,cipher):
@@ -14,14 +12,21 @@ def client_put(id,val,connec,cipher):
     
 ## Comparer deux salaires entre eux
 def client_compare(id1,id2,connec):
-    ida = server_compare(id1,id2, connec)
+    ida = server_compare(id1,id2,connec)
     return ida
+
+def client_get(connec,cipher,id):
+    encrypted_val = server_get(connec,id)
+    ## Coté dechiffré client et affichage
+    valdc = cipher.decrypt(encrypted_val)
+    return valdc
 
 ## Additionner la somme des salaires
 def client_sum(connec, cipher):
     encrypted_sum = server_sum(connec)
+    print(encrypted_sum)
     ## Coté dechiffré client et affichage
-    valdc = cipher.decrypt(encrypted_sum)
+    valdc = cipher.decrypt(63986029+165182812)
     return valdc
     
 ##Coté serveur
@@ -41,9 +46,9 @@ def server_compare(id1,id2,connec):
     cur = connec.cursor()
     query = "SELECT salaire FROM salaire_employe WHERE id = %s"
     cur.execute(query, (id1,))
-    val1 = cur.fetchone()
+    val1 = int(cur.fetchone()[0])
     cur.execute(query, (id2,))
-    val2 = cur.fetchone()
+    val2 = int(cur.fetchone()[0])
     if val1 == val2 :
         return id1 + " a le même salaire que " + id2
     elif val1 < val2:
@@ -55,30 +60,40 @@ def server_sum(connec):
     cur = connec.cursor()
     query = "SELECT salaire FROM salaire_employe"
     cur.execute(query)
+    somme = 0
+    for i in cur:
+        somme += int(i[0])
+    return somme
 
+def server_get(connec,id):
+    cur = connec.cursor()
+    query = "SELECT salaire FROM salaire_employe WHERE id=%s"
+    cur.execute(query, (id,))
+    valc = int(cur.fetchone()[0])
+    return valc
 
 if __name__ == '__main__':
 
     db_user = 'root'
-    db_password = 'root'
+    db_password = 'mysql'
     db_host = 'localhost'
     db_db = 'poc_question31'
     server_host = 'server'
 
-    cle = b"*v0jTYiU$aLydY3!P/OcEC7A&97P6+&XH#UIHvHQptFt4$*j5t!cRt3N74tYJDte"
+    cle = b'*v0jTYiU$aLydY3!P/OcEC7A&97P6+&XH#UIHvHQptFt4$*j5t!cRt3N74tYJDte'
     cipher = OPE(cle)
-    
+
     #Fonction de connexion à la base de données
     def db_connexion(user,pas,host,db):
-        cnx = mysql.connector.connect(user=user, password=pas, host=host,
-                                    database=db)
+        cnx = mysql.connector.connect(user=user, password=pas, host=host, database=db)
         return cnx
     connec = db_connexion(db_user,db_password,db_host,db_db)
     # Afficher un menu dans le terminal permettant de choisir entre les différentes opérations à savoir, insérer un nouveau salaire, comparer deux salaires entre eux et additionner la somme des salaires
     print("1. Insérer un nouveau salaire")
     print("2. Comparer deux salaires")
     print("3. Additionner la somme des salaires")
-    print("4. Quitter")
+    print("4. Récupérer un salaire")
+    print("5. Quitter")
     choice = input("Entrez votre choix : ")
     #Demander la valeur du salaire à insérer pour le choix 1
     if choice == "1":
@@ -93,4 +108,7 @@ if __name__ == '__main__':
     if choice == "3":
         print(client_sum(connec, cipher))
     if choice == "4":
+        id = input("Entrez l'id du salaire : ")
+        print(client_get(connec, cipher, id))    
+    if choice == "5":
         exit()
