@@ -67,5 +67,13 @@ if __name__ == '__main__':
     if choice == "1":
         nom = input("Entrez l'id de l'employé : ")
         salaire = input("Entrez le salaire de l'employé : ")
-        put(nom,salaire,connec)
-    
+        client_put(nom,salaire,connec)
+        print("Salaire inséré avec succès")
+    if choice == "2":
+        nom1 = input("Entrez le premier id : ")
+        nom2 = input("Entrez le deuxième id : ")
+        print(f'le salaire le plus important est : {client_compare(nom1,nom2)}')
+    if choice == "3":
+        print(client_sum())
+    if choice == "4":
+        exit()
