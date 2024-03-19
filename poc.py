@@ -14,7 +14,7 @@ def client_put(id,val,connec,cipher):
     
 ## Comparer deux salaires entre eux
 def client_compare(id1,id2,connec):
-    ida = server_compare(id1,id2)
+    ida = server_compare(id1,id2, connec)
     return ida
 
 ## Additionner la somme des salaires
