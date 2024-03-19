@@ -35,6 +35,8 @@ def server_put(id,valc,connec):
     cur.execute(sql,val)
     connec.commit()
 def server_compare(id1,id2,connec):
+    ## Comparaison avec ORE et retour du resultat
+    
     pass
 
 def server_sum(connec):
