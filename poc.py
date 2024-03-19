@@ -24,9 +24,8 @@ def client_get(connec,cipher,id):
 ## Additionner la somme des salaires
 def client_sum(connec, cipher):
     encrypted_sum = server_sum(connec)
-    print(encrypted_sum)
     ## Coté dechiffré client et affichage
-    valdc = cipher.decrypt(63986029+165182812)
+    valdc = cipher.decrypt(encrypted_sum)
     return valdc
     
 ##Coté serveur
@@ -75,7 +74,7 @@ def server_get(connec,id):
 if __name__ == '__main__':
 
     db_user = 'root'
-    db_password = 'mysql'
+    db_password = 'root'
     db_host = 'localhost'
     db_db = 'poc_question31'
     server_host = 'server'
@@ -109,6 +108,6 @@ if __name__ == '__main__':
         print(client_sum(connec, cipher))
     if choice == "4":
         id = input("Entrez l'id du salaire : ")
-        print(client_get(connec, cipher, id))    
+        print(f'Le salaire est de {client_get(connec, cipher, id)} euros')    
     if choice == "5":
         exit()
