@@ -1,6 +1,6 @@
 import mysql.connector 
 from pyope.ope import OPE
-##Implémentation ORE
+from phe import paillier
 
 ##Coté client
 ## Insérer un nouveau salaire coté client
@@ -23,10 +23,13 @@ def client_get(connec,cipher,id):
 
 ## Additionner la somme des salaires
 def client_sum(connec, cipher):
-    encrypted_sum = server_sum(connec)
+    encrypted_cur = server_sum(connec)
     ## Coté dechiffré client et affichage
-    valdc = cipher.decrypt(encrypted_sum)
-    return valdc
+    somme = 0
+    for i in encrypted_cur:
+        somme += cipher.decrypt(i)
+
+    return somme
     
 ##Coté serveur
 ## Insérer un nouveau salaire coté serveur
@@ -59,10 +62,10 @@ def server_sum(connec):
     cur = connec.cursor()
     query = "SELECT salaire FROM salaire_employe"
     cur.execute(query)
-    somme = 0
-    for i in cur:
-        somme += int(i[0])
-    return somme
+    tab_enc=[]
+    for i in cur: 
+        tab_enc.append(int(i[0]))
+    return tab_enc
 
 def server_get(connec,id):
     cur = connec.cursor()
@@ -74,7 +77,7 @@ def server_get(connec,id):
 if __name__ == '__main__':
 
     db_user = 'root'
-    db_password = 'root'
+    db_password = 'mysql'
     db_host = 'localhost'
     db_db = 'poc_question31'
     server_host = 'server'
@@ -105,7 +108,7 @@ if __name__ == '__main__':
         nom2 = input("Entrez le deuxième id : ")
         print(f'{client_compare(nom1,nom2,connec)}')
     if choice == "3":
-        print(client_sum(connec, cipher))
+        print(f'La somme des salaires est de : {client_sum(connec, cipher)} euros')
     if choice == "4":
         id = input("Entrez l'id du salaire : ")
         print(f'Le salaire est de {client_get(connec, cipher, id)} euros')    
