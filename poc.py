@@ -65,7 +65,7 @@ if __name__ == '__main__':
     db_db = 'poc_question31'
     server_host = 'server'
 
-    cle = "*v0jTYiU$aLydY3!P/OcEC7A&97P6+&XH#UIHvHQptFt4$*j5t!cRt3N74tYJDte"
+    cle = b"*v0jTYiU$aLydY3!P/OcEC7A&97P6+&XH#UIHvHQptFt4$*j5t!cRt3N74tYJDte"
     cipher = OPE(cle)
     
     #Fonction de connexion à la base de données
