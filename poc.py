@@ -46,7 +46,7 @@ def server_compare(id1,id2,connec):
     val2 = cur.fetchone()
     if val1 == val2 :
         return id1 + " a le même salaire que " + id2
-    elif val1 <= val2:
+    elif val1 < val2:
         return id2 + " a le plus grand salaire"
     else:
         return id1 + " a le plus grand salaire"
