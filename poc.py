@@ -3,29 +3,30 @@ import mysql.connector
 ##Coté client
 
 ## Insérer un nouveau salaire
-function put(id,val,connec):
-    # Ecriture des requetes
-    sql = "INSERT INTO salaire_employe(id,salaire) VALUES (%s,%s)"
+def client_put(id,val,connec):
+    
+    ## Implementation de l'Order Reavealing Encryption
+    #valc = generer_cle(b'long key' * 2)
     val = (id, val)
-    # Creation du curseur pour etablir la connexion
-    cur = connec.cursor()
-    # Execution des requetes
-    cur.execute(sql,val)
-    connec.commit()
+    
+#def client_compare(id1,id2)
 
-
-#function compare(id1,id2)
-
-#function sum()
+#def client_sum()
 
 
 ##Coté serveur
 
-#function put(id,val)
+def server_put(id,val,connec)
+# Ecriture des requetes
+    sql = "INSERT INTO salaire_employe(id,salaire) VALUES (%s,%s)"
+      # Creation du curseur pour etablir la connexion
+    cur = connec.cursor()
+    # Execution des requetes
+    cur.execute(sql,val)
+    connec.commit()
+#def server_compare(id1,id2)
 
-#function compare(id1,id2)
-
-#function sum()
+#def server_sum()
 
 
 
@@ -52,5 +53,5 @@ if __name__ == '__main__':
     if choice == "1":
         nom = input("Entrez l'id de l'employé : ")
         salaire = input("Entrez le salaire de l'employé : ")
-
+        put(nom,salaire,connec)
     
