@@ -1,33 +1,47 @@
 import mysql.connector 
 
-##Coté client
+##Implémentation ORE
 
-## Insérer un nouveau salaire
+
+
+##Coté client
+## Insérer un nouveau salaire coté client
 def client_put(id,val,connec):
     
     ## Implementation de l'Order Reavealing Encryption
-    #valc = generer_cle(b'long key' * 2)
-    val = (id, val)
+    valc = generer_cle(b'long key' * 2)
     
-#def client_compare(id1,id2)
+    server_put(id,valc,connec)
+## Comparer deux salaires entre eux
+def client_compare(id1,id2):
+    ida = server_compare(id1,id2)
+    return ida
 
-#def client_sum()
+## Additionner la somme des salaires
+def client_sum():
+    encrypted_sum = server_sum()
+    ## Coté dechiffré client et affichage
 
 
 ##Coté serveur
-
-def server_put(id,val,connec)
+## Insérer un nouveau salaire coté serveur
+def server_put(id,valc,connec):
 # Ecriture des requetes
     sql = "INSERT INTO salaire_employe(id,salaire) VALUES (%s,%s)"
       # Creation du curseur pour etablir la connexion
     cur = connec.cursor()
     # Execution des requetes
+    val = (id, valc)
     cur.execute(sql,val)
     connec.commit()
-#def server_compare(id1,id2)
+def server_compare(id1,id2):
+    pass
 
-#def server_sum()
-
+def server_sum():
+    connec = db_connexion(db_user,db_password,db_host,db_db)
+    cur = connec.cursor()
+    query = "SELECT salaire FROM salaire_employe"
+    cur.execute(query)
 
 
 if __name__ == '__main__':
