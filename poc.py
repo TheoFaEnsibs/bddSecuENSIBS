@@ -43,7 +43,7 @@ def server_compare(id1,id2,connec):
     cur.execute(query, (id1,))
     val1 = curseur.fetchone()
     cur.execute(query, (id2,))
-    val1 = curseur.fetchone()
+    val2 = curseur.fetchone()
     if val1 == val2 :
         return id1 + " a le même salaire que " + id2
     elif val1 <= val2:
