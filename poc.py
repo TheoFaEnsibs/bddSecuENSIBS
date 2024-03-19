@@ -39,7 +39,7 @@ def server_put(id,valc,connec):
 def server_compare(id1,id2,connec):
     ## Comparaison avec ORE et retour du resultat
     cur = connec.cursor()
-    query = "SELECT salaire FROM salaire_employe WHERE nom = %s"
+    query = "SELECT salaire FROM salaire_employe WHERE id = %s"
     cur.execute(query, (id1,))
     val1 = curseur.fetchone()
     cur.execute(query, (id2,))
