@@ -13,13 +13,13 @@ def client_put(id,val,connec):
     
     server_put(id,valc,connec)
 ## Comparer deux salaires entre eux
-def client_compare(id1,id2):
+def client_compare(id1,id2,connec):
     ida = server_compare(id1,id2)
     return ida
 
 ## Additionner la somme des salaires
-def client_sum():
-    encrypted_sum = server_sum()
+def client_sum(connec):
+    encrypted_sum = server_sum(connec)
     ## Coté dechiffré client et affichage
 
 
@@ -34,11 +34,10 @@ def server_put(id,valc,connec):
     val = (id, valc)
     cur.execute(sql,val)
     connec.commit()
-def server_compare(id1,id2):
+def server_compare(id1,id2,connec):
     pass
 
-def server_sum():
-    connec = db_connexion(db_user,db_password,db_host,db_db)
+def server_sum(connec):
     cur = connec.cursor()
     query = "SELECT salaire FROM salaire_employe"
     cur.execute(query)
@@ -72,8 +71,8 @@ if __name__ == '__main__':
     if choice == "2":
         nom1 = input("Entrez le premier id : ")
         nom2 = input("Entrez le deuxième id : ")
-        print(f'le salaire le plus important est : {client_compare(nom1,nom2)}')
+        print(f'le salaire le plus important est : {client_compare(nom1,nom2,connec)}')
     if choice == "3":
-        print(client_sum())
+        print(client_sum(connec))
     if choice == "4":
         exit()
