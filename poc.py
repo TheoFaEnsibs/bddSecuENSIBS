@@ -9,7 +9,7 @@ from pyope.ope import OPE
 def client_put(id,val,connec,cipher):
     
     ## Implementation de l'Order Reavealing Encryption
-    valc = cipher.encrypt(val)
+    valc = cipher.encrypt(int(val))
     server_put(id,valc,connec)
     
 ## Comparer deux salaires entre eux
