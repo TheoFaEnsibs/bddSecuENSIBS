@@ -19,22 +19,13 @@ def db_connexion(user,pas,host,db):
 def db_close(cnx):
     cnx.close()
 
-#Fonction de mise à jour du ageHOM (ajout des attributs de l'objet chiffré) d'une personne
-def updateHOMage(nom, HOM_age):
+
+#Fonction de calcul de la somme des salaires
+def calculsomme():
     connec = db_connexion(db_user,db_password,db_host,db_db)
     cur = connec.cursor()
-    query = "UPDATE age SET HOM_age=(%s) WHERE nom=(%s)"
-    cur.execute(query, (HOM_age, nom))
-    cur.close
-    db_close(connec)
-
-#Fonction de calcul de la somme des HOM_age entre deux personnes
-def calculsomme(nom1, nom2):
-    connec = db_connexion(db_user,db_password,db_host,db_db)
-    cur = connec.cursor()
-    query = "SELECT HOM_age FROM age WHERE nom=(%s) OR nom=(%s)"
-    cur.execute(query, (nom1, nom2))
-
+    query = "SELECT salaire FROM salaire_employe"
+    cur.execute(query)
     somme = 0
     for HOM_age in cur:
         #Chargement des attributs dans une variables
